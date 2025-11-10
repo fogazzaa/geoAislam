@@ -1,22 +1,19 @@
-// Arquivo: src/theme.js
-
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     mode: "light",
-    // Cores baseadas no design Medxpress
     primary: {
-      main: "#1E8449", // Verde Escuro Forte para AppBar e Botões Principais (similar ao logo)
-      light: "#2ECC71", // Verde Mais Claro/Brilhante para detalhes
-      dark: "#145A32", // Verde mais escuro para hover
+      main: "#1E8449",
+      light: "#2ECC71",
+      dark: "#145A32",
     },
     secondary: {
-      main: "#d32f2f", // Mantendo o vermelho para ícones de atenção, como no original
+      main: "#d32f2f",
     },
     background: {
-      default: "#f4f6f8", // Fundo geral mais claro
-      paper: "#ffffff", // Fundo de Cards
+      default: "#f4f6f8",
+      paper: "#ffffff",
     },
     text: {
       primary: "#1a1a1a",
@@ -26,10 +23,9 @@ const theme = createTheme({
   typography: {
     fontFamily: "Roboto, 'Helvetica Neue', Arial, sans-serif",
     h1: {
-      // Para o título da Hero Section
       fontWeight: 800,
       fontSize: "3.5rem",
-      color: "white", // Títulos na Hero são brancos
+      color: "white",
     },
     h4: {
       fontWeight: 700,
@@ -49,9 +45,8 @@ const theme = createTheme({
           borderRadius: "8px",
         },
         containedPrimary: {
-          // Ajuste para botões primários
           "&:hover": {
-            backgroundColor: "#145A32", // Cor escura no hover
+            backgroundColor: "#145A32",
           },
         },
       },

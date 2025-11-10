@@ -1,5 +1,3 @@
-// Arquivo: src/pages/BlocosEconomicos.jsx
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -8,157 +6,196 @@ import {
     Card, 
     Typography, 
     Box, 
-    Link,
+    Grid2 as Grid, 
+    CardContent, 
+    Divider,
     List, 
     ListItem,
     ListItemText,
-    Table, 
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    CardMedia, // Componente de mídia para imagens
+    Link,
 } from "@mui/material";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArticleIcon from "@mui/icons-material/Article";
-import BarChartIcon from "@mui/icons-material/BarChart"; 
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import PeopleIcon from '@mui/icons-material/People';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PublicIcon from '@mui/icons-material/Public';
+
+import GraficoBlocos from "../components/mod/GraficoBlocos"; 
 import theme from "../theme"; 
 
-// IMPORTAÇÃO LOCAL DA IMAGEM
-import graficoBlocos from "../img/grafico-blocos-economicos.png"; 
 
-// Componente de Layout de Conteúdo (Mantido)
 const ContentPage = ({ title, subtitle, children, navigateBack }) => (
-  <Box sx={{ py: 4, minHeight: "80vh" }}>
-    <Container maxWidth="md">
-      <Button
-        startIcon={<ArrowBackIcon />}
-        onClick={navigateBack}
-        variant="outlined"
-        color="primary"
-        sx={{ mb: 3 }}
-      >
-        Voltar para a Home
-      </Button>
+    <Box sx={{ py: 4, minHeight: "80vh" }}>
+        <Container maxWidth="md">
+            <Button
+                startIcon={<ArrowBackIcon />}
+                onClick={navigateBack}
+                variant="outlined"
+                color="primary"
+                sx={{ mb: 3 }}
+            >
+                Voltar para a Home
+            </Button>
 
-      <Card sx={{ p: 4, textAlign: "left" }}>
-        <Typography variant="h4" component="h1" gutterBottom color="primary">
-          {title}
-        </Typography>
-        <Typography
-          variant="h6"
-          gutterBottom
-          color="text.secondary"
-          sx={{ mb: 3 }}
-        >
-          {subtitle}
-        </Typography>
-        <Box sx={{ borderTop: "1px solid #eee", pt: 2 }}>{children}</Box>
-      </Card>
-    </Container>
-  </Box>
+            <Card sx={{ p: 4, textAlign: "left" }}>
+                <Typography variant="h4" component="h1" gutterBottom color="primary">
+                    {title}
+                </Typography>
+                <Typography
+                    variant="h6"
+                    gutterBottom
+                    color="text.secondary"
+                    sx={{ mb: 3 }}
+                >
+                    {subtitle}
+                </Typography>
+                <Box sx={{ borderTop: "1px solid #eee", pt: 2 }}>{children}</Box>
+            </Card>
+        </Container>
+    </Box>
 );
 
 export default function BlocosEconomicosPage() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const comparisonData = [
-    { bloco: 'G7', pib: '≈ 45', populacao: '≈ 10', instituicoes: 'FMI, Banco Mundial' },
-    { bloco: 'BRICS+', pib: '≈ 35', populacao: '≈ 45', instituicoes: 'NDB (Banco de Desenvolvimento)' },
-  ];
+    return (
+        <ContentPage
+            title="A Nova Ordem Multipolar 🌐"
+            subtitle="Análise Geopolítica do G7 vs. BRICS+: O Confronto de Poder Econômico e Demográfico."
+            navigateBack={() => navigate("/")}
+        >
+            <Box sx={{ mb: 4 }}>
+                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
+                    1. Peso Global: PIB vs. População
+                </Typography>
 
-  return (
-    <ContentPage
-      title="Geoeconomia e a Ascensão Multipolar 🌐"
-      subtitle="Análise profunda dos BRICS, G7 e o desafio às instituições de Bretton Woods."
-      navigateBack={() => navigate("/")}
-    >
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
-          1. A Disputa pela Governança Global
-        </Typography>
+                <Typography component="p" sx={{ lineHeight: 1.8, mb: 3 }}>
+                    A disputa pela liderança global é claramente visível ao comparar o poder econômico (PIB) e o poder demográfico (População) dos dois principais agrupamentos. O BRICS+ demonstra seu domínio em <strong>População</strong>, enquanto a métrica do PIB (seja Nominal ou PPC) revela diferentes histórias sobre a <strong>produtividade</strong> e a <strong>influência</strong> de cada bloco.
+                </Typography>
 
-        <Typography component="p" sx={{ lineHeight: 1.8, mb: 2 }}>
-          O surgimento do <strong>BRICS+</strong> como um bloco consolidado reflete a insatisfação do Sul Global com o modelo de governança econômica herdado do pós-guerra (Bretton Woods), dominado pelo <strong>G7</strong>. A expansão do BRICS visa não apenas aumentar o poder de barganha, mas criar uma arquitetura financeira paralela, como o Novo Banco de Desenvolvimento (NDB).
-        </Typography>
-        
-        <Typography component="p" sx={{ lineHeight: 1.8 }}>
-          Essa dinâmica sinaliza uma clara <strong>erosão da ordem unipolar</strong> e um movimento em direção a um sistema multipolar onde o poder econômico e o peso demográfico se realinham.
-        </Typography>
-      </Box>
+                <GraficoBlocos />
 
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.dark, borderBottom: '2px solid #eee', pb: 1, display: 'flex', alignItems: 'center' }}>
-            <BarChartIcon sx={{ mr: 1 }} color="secondary" />
-            2. Comparativo Geoeconômico dos Blocos (Valores % do Total Global)
-        </Typography>
-        
-        <TableContainer component={Paper} sx={{ my: 3, border: `1px solid ${theme.palette.divider}` }}>
-          <Table size="small" aria-label="dados comparativos brics g7">
-            <TableHead>
-              <TableRow sx={{ bgcolor: theme.palette.primary.light + '10' }}>
-                <TableCell sx={{ fontWeight: 700 }}>Bloco</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 700 }}>PIB Global (em %)</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 700 }}>População Global (em %)</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 700 }}>Instituição Chave</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {comparisonData.map((row) => (
-                <TableRow key={row.bloco}>
-                  <TableCell component="th" scope="row" sx={{ fontWeight: 600 }}>
-                    {row.bloco}
-                  </TableCell>
-                  <TableCell align="right">{row.pib}%</TableCell>
-                  <TableCell align="right">{row.populacao}%</TableCell>
-                  <TableCell align="right">{row.instituicoes}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                <Divider sx={{ my: 4 }} />
+                
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Card variant="outlined" sx={{ height: '100%' }}>
+                            <CardContent>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.info.main, display: 'flex', alignItems: 'center' }}>
+                                    <StorefrontIcon sx={{ mr: 1 }} /> O Poder Nominal (G7)
+                                </Typography>
+                                <Typography component="p" variant="body2" sx={{ mt: 1 }}>
+                                    O <strong>G7</strong> (EUA, Canadá, Reino Unido, França, Alemanha, Itália, Japão) ainda domina a métrica do PIB Nominal (~$51 trilhões), refletindo sua alta produtividade e controle das finanças globais (dólar).
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Card variant="outlined" sx={{ height: '100%' }}>
+                            <CardContent>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.error.main, display: 'flex', alignItems: 'center' }}>
+                                    <PeopleIcon sx={{ mr: 1 }} /> O Domínio Real (BRICS+)
+                                </Typography>
+                                <Typography component="p" variant="body2" sx={{ mt: 1 }}>
+                                    O <strong>BRICS+</strong> (10 membros) supera o G7 em população (mais de 40% global) e em PIB por Paridade de Poder de Compra (PPC), indicando um domínio crescente na <strong>economia real</strong>.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </Box>
+            
+            <Divider sx={{ my: 4 }} />
 
-        <Typography component="p" sx={{ lineHeight: 1.8 }}>
-            Enquanto o G7 ainda detém o maior poder financeiro, o BRICS+ domina em termos <strong>demográficos</strong> e seu PIB (em Paridade de Poder de Compra - PPC) já ultrapassou o do G7, refletindo a mudança do centro de gravidade econômica global para a Ásia.
-        </Typography>
-        
-        {/* COMPONENTE CORRIGIDO */}
-        <CardMedia 
-            component="img"
-            image={graficoBlocos}
-            alt="Gráfico de Comércio Intra e Inter-Blocos Econômicos"
-            sx={{ width: '100%', height: 'auto', border: '1px solid #ddd', borderRadius: 1, mt: 3 }}
-        />
-        {/* FIM DA IMAGEM INTEGRADA */}
-      </Box>
+            <Box sx={{ mb: 4 }}>
+                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1, display: 'flex', alignItems: 'center' }}>
+                    <TrendingUpIcon sx={{ mr: 1 }} />
+                    2. A Dinâmica de Crescimento e Projeções
+                </Typography>
 
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
-          3. O Desafio da Desdolarização
-        </Typography>
-        
-        <Typography component="p" sx={{ lineHeight: 1.8, mb: 2 }}>
-          O tema da <strong>desdolarização</strong> é central para os BRICS. A busca por alternativas ao Dólar Americano em transações de commodities (como o petróleo) visa reduzir a vulnerabilidade a sanções ocidentais e democratizar o sistema financeiro. Este movimento, embora lento, tem um impacto direto na <Link href="https://example.com/reserva-cambial" target="_blank" rel="noopener">arquitetura de reserva cambial global.</Link>
-        </Typography>
-      </Box>
-      
-      {/* Seção de Referências */}
-      <Box sx={{ mt: 5, pt: 3, borderTop: '1px solid #ddd' }}>
-        <Typography variant="h5" component="h3" sx={{ mb: 2, color: theme.palette.primary.main, display: 'flex', alignItems: 'center' }}>
-          <ArticleIcon sx={{ mr: 1 }} />
-          Bibliografia e Fontes Geoeconômicas
-        </Typography>
-        <List dense>
-          <ListItem disablePadding>
-            <ListItemText primary="Subramanian, A. (2023). BRICS, the Dollar, and the New Global Financial Order. Peterson Institute for International Economics." secondary={<Link href="https://www.piie.com/brics-dollar" target="_blank">Análise sobre Desdolarização.</Link>} />
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemText primary="World Bank. Dados de PIB e População por Blocos Econômicos (2024)." secondary={<Link href="https://www.worldbank.org/databrics-g7" target="_blank">Estatísticas Oficiais.</Link>} />
-          </ListItem>
-        </List>
-      </Box>
-    </ContentPage>
-  );
+                <Typography component="p" sx={{ lineHeight: 1.8, mb: 3 }}>
+                    O fator mais crítico para a mudança da ordem mundial é a **taxa de crescimento**. Enquanto as economias do G7 demonstram crescimento moderado, o BRICS+ é o motor do crescimento global, impulsionado pela Ásia (Índia e China).
+                </Typography>
+
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Card variant="outlined" sx={{ bgcolor: '#ecf0f1' }}>
+                            <CardContent>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.info.dark }}>
+                                    Crescimento G7 (2025E)
+                                </Typography>
+                                <Typography variant="h3" component="p" color={theme.palette.info.dark} sx={{ fontWeight: 700, my: 1 }}>
+                                    ~ 1.7%
+                                </Typography>
+                                <Typography component="p" variant="body2">
+                                    Crescimento **moderado**, focado na estabilidade e serviços de alto valor agregado.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Card variant="outlined" sx={{ bgcolor: '#fdeded' }}>
+                            <CardContent>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.error.dark }}>
+                                    Crescimento BRICS+ (2025E)
+                                </Typography>
+                                <Typography variant="h3" component="p" color={theme.palette.error.dark} sx={{ fontWeight: 700, my: 1 }}>
+                                    ~ 3.4%
+                                </Typography>
+                                <Typography component="p" variant="body2">
+                                    Crescimento **acelerado**, impulsionado pela expansão da classe média e investimento em infraestrutura.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </Box>
+            
+            <Divider sx={{ my: 4 }} />
+
+            <Box sx={{ mt: 5, pt: 3 }}>
+                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.main, borderBottom: '2px solid #eee', pb: 1, display: 'flex', alignItems: 'center' }}>
+                    <AttachMoneyIcon sx={{ mr: 1 }} />
+                    3. Desdolarização e Instituições Alternativas
+                </Typography>
+                
+                <Typography component="p" sx={{ lineHeight: 1.8, mb: 2 }}>
+                    A expansão do BRICS é uma tentativa clara de criar uma arquitetura financeira e política alternativa. O principal objetivo é reduzir a dependência do dólar americano e das instituições financeiras tradicionais, dando voz ao <strong>Sul Global</strong>.
+                </Typography>
+
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h6" component="h4" sx={{ mt: 2, mb: 1 }}>
+                            <AttachMoneyIcon fontSize="small" sx={{ mr: 0.5 }} /> O Desafio do Dólar
+                        </Typography>
+                        <Typography component="p" variant="body2" sx={{ mb: 2 }}>
+                            O uso crescente de moedas locais em transações bilaterais e o desenvolvimento de sistemas de pagamento alternativos, como o CIPS (China), são sinais da busca por autonomia monetária.
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            *Para análises detalhadas sobre autonomia monetária, consulte fontes especializadas em geopolítica econômica.*
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h6" component="h4" sx={{ mt: 2, mb: 1 }}>
+                            <PublicIcon fontSize="small" sx={{ mr: 0.5 }} /> Instituições Chave
+                        </Typography>
+                        <List dense>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Novo Banco de Desenvolvimento (NDB)" secondary={<Link href="https://www.ndb.int/" target="_blank" rel="noopener">Banco dos BRICS para projetos de infraestrutura.</Link>} />
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="Acordo de Reserva Contingente (CRA)" secondary="Mecanismo de estabilidade financeira para membros." />
+                            </ListItem>
+                            <ListItem disablePadding>
+                                <ListItemText primary="FMI e Banco Mundial" secondary="Instituições lideradas pelo G7, foco de críticas do BRICS+." />
+                            </ListItem>
+                        </List>
+                    </Grid>
+                </Grid>
+            </Box>
+        </ContentPage>
+    );
 }

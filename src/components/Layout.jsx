@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom"; // Outlet renderiza o componente da rota
+import { Outlet } from "react-router-dom";
 import {
   Typography,
   Box,
@@ -7,11 +7,7 @@ import {
   CssBaseline,
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme"; // Importa o tema refatorado
-
-// -------------------------------------------------------------------
-// 1. Footer (Mantido)
-// -------------------------------------------------------------------
+import theme from "../theme";
 
 const Footer = () => (
   <Box
@@ -20,7 +16,6 @@ const Footer = () => (
       py: 3,
       px: 2,
       mt: "auto",
-      // Cor de fundo levemente cinza
       backgroundColor: theme.palette.grey[200],
       borderTop: `1px solid ${theme.palette.divider}`,
     }}
@@ -35,29 +30,16 @@ const Footer = () => (
   </Box>
 );
 
-// -------------------------------------------------------------------
-// 2. Componente de Layout Principal (Simplificado)
-// -------------------------------------------------------------------
-
 export default function Layout() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        {/* HEADER E NAVMENU REMOVIDOS AQUI */}
-        
-        {/* Conteúdo da página (Home, Guerra, Blocos, etc.) */}
         <Box component="main" sx={{ flexGrow: 1 }}>
-          <Outlet /> 
+          <Outlet />
         </Box>
-        
         <Footer />
       </Box>
     </ThemeProvider>
   );
 }
-
-// Nota: Certifique-se de que a exportação dos dados dos tópicos 
-// (topicosData) foi mantida no arquivo HomePageContent.jsx se você 
-// tiver dependências externas. Como o Header e NavMenu foram removidos, 
-// a dependência aqui também foi removida.
