@@ -23,7 +23,7 @@ const Footer = () => (
     <Container maxWidth="lg">
       <Typography variant="body2" color="text.secondary" align="center">
         {
-          "© 2024 Geo em Foco. Todos os direitos reservados. | Dados atualizados até Outubro/2025."
+          "© 2025 Geo em Foco | Desenvolvido por Vinicius F. Cintra"
         }
       </Typography>
     </Container>
