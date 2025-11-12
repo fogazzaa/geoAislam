@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { Box, Typography } from "@mui/material";
+import L from 'leaflet';
 
 const hotspotsData = [
     {
@@ -66,6 +67,16 @@ const hotspotsData = [
 ];
 
 const MapaCrises = () => {
+    useEffect(() => {
+        delete L.Icon.Default.prototype._getIconUrl;
+
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+            iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+        });
+    }, []);
+
     const mapStyle = { height: "400px", width: "100%", borderRadius: '8px', border: '1px solid #ddd' };
     const initialCenter = [10, 20];
 
@@ -74,9 +85,9 @@ const MapaCrises = () => {
             <Typography variant="h6" component="h3" sx={{ mb: 2 }}>
                 Mapa Interativo de Hotspots de Crises Ambientais 🌍
             </Typography>
-            
+
             <MapContainer center={initialCenter} zoom={2.5} scrollWheelZoom={false} style={mapStyle}>
-                
+
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -87,9 +98,9 @@ const MapaCrises = () => {
                         <Circle
                             center={[hotspot.lat, hotspot.lng]}
                             pathOptions={{ color: hotspot.cor, fillColor: hotspot.cor, fillOpacity: 0.2 }}
-                            radius={hotspot.radius} 
+                            radius={hotspot.radius}
                         />
-                        
+
                         <Marker position={[hotspot.lat, hotspot.lng]}>
                             <Popup>
                                 <Typography variant="subtitle2" sx={{ fontWeight: 700, color: hotspot.cor }}>
