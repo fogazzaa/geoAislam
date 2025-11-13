@@ -1,18 +1,20 @@
+// pages/BlocosEconomicos.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-    Container, 
-    Button, 
-    Card, 
-    Typography, 
-    Box, 
-    Grid2 as Grid, 
-    CardContent, 
+import {
+    Container,
+    Button,
+    Card,
+    Typography,
+    Box,
+    Grid2 as Grid,
+    CardContent,
     Divider,
-    List, 
+    List,
     ListItem,
     ListItemText,
     Link,
+    useTheme,
 } from "@mui/material";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -22,43 +24,46 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PublicIcon from '@mui/icons-material/Public';
 
-import GraficoBlocos from "../components/mod/GraficoBlocos"; 
-import theme from "../theme"; 
+import GraficoBlocos from "../components/mod/GraficoBlocos";
 
+const ContentPage = ({ title, subtitle, children, navigateBack }) => {
+    const theme = useTheme();
 
-const ContentPage = ({ title, subtitle, children, navigateBack }) => (
-    <Box sx={{ py: 4, minHeight: "80vh" }}>
-        <Container maxWidth="md">
-            <Button
-                startIcon={<ArrowBackIcon />}
-                onClick={navigateBack}
-                variant="outlined"
-                color="primary"
-                sx={{ mb: 3 }}
-            >
-                Voltar para a Home
-            </Button>
-
-            <Card sx={{ p: 4, textAlign: "left" }}>
-                <Typography variant="h4" component="h1" gutterBottom color="primary">
-                    {title}
-                </Typography>
-                <Typography
-                    variant="h6"
-                    gutterBottom
-                    color="text.secondary"
+    return (
+        <Box sx={{ py: 4, minHeight: "80vh" }}>
+            <Container maxWidth="md">
+                <Button
+                    startIcon={<ArrowBackIcon />}
+                    onClick={navigateBack}
+                    variant="outlined"
+                    color="primary"
                     sx={{ mb: 3 }}
                 >
-                    {subtitle}
-                </Typography>
-                <Box sx={{ borderTop: "1px solid #eee", pt: 2 }}>{children}</Box>
-            </Card>
-        </Container>
-    </Box>
-);
+                    Voltar para a Home
+                </Button>
+
+                <Card sx={{ p: 4, textAlign: "left" }}>
+                    <Typography variant="h4" component="h1" gutterBottom color="primary">
+                        {title}
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        gutterBottom
+                        color="text.secondary"
+                        sx={{ mb: 3 }}
+                    >
+                        {subtitle}
+                    </Typography>
+                    <Box sx={{ borderTop: `1px solid ${theme.palette.divider}`, pt: 2 }}>{children}</Box>
+                </Card>
+            </Container>
+        </Box>
+    );
+};
 
 export default function BlocosEconomicosPage() {
     const navigate = useNavigate();
+    const theme = useTheme();
 
     return (
         <ContentPage
@@ -67,7 +72,11 @@ export default function BlocosEconomicosPage() {
             navigateBack={() => navigate("/")}
         >
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: `2px solid ${theme.palette.divider}`, pb: 1 }}
+                >
                     1. Peso Global: PIB vs. População
                 </Typography>
 
@@ -78,12 +87,12 @@ export default function BlocosEconomicosPage() {
                 <GraficoBlocos />
 
                 <Divider sx={{ my: 4 }} />
-                
+
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
                         <Card variant="outlined" sx={{ height: '100%' }}>
                             <CardContent>
-                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.info.main, display: 'flex', alignItems: 'center' }}>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.info?.main || '#2196f3', display: 'flex', alignItems: 'center' }}>
                                     <StorefrontIcon sx={{ mr: 1 }} /> O Poder Nominal (G7)
                                 </Typography>
                                 <Typography component="p" variant="body2" sx={{ mt: 1 }}>
@@ -95,7 +104,7 @@ export default function BlocosEconomicosPage() {
                     <Grid item xs={12} md={6}>
                         <Card variant="outlined" sx={{ height: '100%' }}>
                             <CardContent>
-                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.error.main, display: 'flex', alignItems: 'center' }}>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.error?.main || '#f44336', display: 'flex', alignItems: 'center' }}>
                                     <PeopleIcon sx={{ mr: 1 }} /> O Domínio Real (BRICS+)
                                 </Typography>
                                 <Typography component="p" variant="body2" sx={{ mt: 1 }}>
@@ -106,11 +115,15 @@ export default function BlocosEconomicosPage() {
                     </Grid>
                 </Grid>
             </Box>
-            
+
             <Divider sx={{ my: 4 }} />
 
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1, display: 'flex', alignItems: 'center' }}>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: `2px solid ${theme.palette.divider}`, pb: 1, display: 'flex', alignItems: 'center' }}
+                >
                     <TrendingUpIcon sx={{ mr: 1 }} />
                     2. A Dinâmica de Crescimento e Projeções
                 </Typography>
@@ -121,12 +134,15 @@ export default function BlocosEconomicosPage() {
 
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
-                        <Card variant="outlined" sx={{ bgcolor: '#ecf0f1' }}>
+                        <Card
+                            variant="outlined"
+                            sx={{ bgcolor: theme.palette.mode === 'light' ? '#ecf0f1' : theme.palette.grey[700] }}
+                        >
                             <CardContent>
-                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.info.dark }}>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.info?.dark || '#1565c0' }}>
                                     Crescimento G7 (2025E)
                                 </Typography>
-                                <Typography variant="h3" component="p" color={theme.palette.info.dark} sx={{ fontWeight: 700, my: 1 }}>
+                                <Typography variant="h3" component="p" color={theme.palette.info?.dark || '#1565c0'} sx={{ fontWeight: 700, my: 1 }}>
                                     ~ 1.7%
                                 </Typography>
                                 <Typography component="p" variant="body2">
@@ -136,12 +152,15 @@ export default function BlocosEconomicosPage() {
                         </Card>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Card variant="outlined" sx={{ bgcolor: '#fdeded' }}>
+                        <Card
+                            variant="outlined"
+                            sx={{ bgcolor: theme.palette.mode === 'light' ? '#fdeded' : theme.palette.grey[700] }}
+                        >
                             <CardContent>
-                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.error.dark }}>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, color: theme.palette.error?.dark || '#c62828' }}>
                                     Crescimento BRICS+ (2025E)
                                 </Typography>
-                                <Typography variant="h3" component="p" color={theme.palette.error.dark} sx={{ fontWeight: 700, my: 1 }}>
+                                <Typography variant="h3" component="p" color={theme.palette.error?.dark || '#c62828'} sx={{ fontWeight: 700, my: 1 }}>
                                     ~ 3.4%
                                 </Typography>
                                 <Typography component="p" variant="body2">
@@ -152,15 +171,19 @@ export default function BlocosEconomicosPage() {
                     </Grid>
                 </Grid>
             </Box>
-            
+
             <Divider sx={{ my: 4 }} />
 
             <Box sx={{ mt: 5, pt: 3 }}>
-                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.main, borderBottom: '2px solid #eee', pb: 1, display: 'flex', alignItems: 'center' }}>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ mb: 2, color: theme.palette.primary.main, borderBottom: `2px solid ${theme.palette.divider}`, pb: 1, display: 'flex', alignItems: 'center' }}
+                >
                     <AttachMoneyIcon sx={{ mr: 1 }} />
                     3. Desdolarização e Instituições Alternativas
                 </Typography>
-                
+
                 <Typography component="p" sx={{ lineHeight: 1.8, mb: 2 }}>
                     A expansão do BRICS é uma tentativa clara de criar uma arquitetura financeira e política alternativa. O principal objetivo é reduzir a dependência do dólar americano e das instituições financeiras tradicionais, dando voz ao <strong>Sul Global</strong>.
                 </Typography>
@@ -184,7 +207,19 @@ export default function BlocosEconomicosPage() {
                         </Typography>
                         <List dense>
                             <ListItem disablePadding>
-                                <ListItemText primary="Novo Banco de Desenvolvimento (NDB)" secondary={<Link href="https://www.ndb.int/" target="_blank" rel="noopener">Banco dos BRICS para projetos de infraestrutura.</Link>} />
+                                <ListItemText
+                                    primary="Novo Banco de Desenvolvimento (NDB)"
+                                    secondary={
+                                        <Link
+                                            href="https://www.ndb.int/"
+                                            target="_blank"
+                                            rel="noopener"
+                                            color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
+                                        >
+                                            Banco dos BRICS para projetos de infraestrutura.
+                                        </Link>
+                                    }
+                                />
                             </ListItem>
                             <ListItem disablePadding>
                                 <ListItemText primary="Acordo de Reserva Contingente (CRA)" secondary="Mecanismo de estabilidade financeira para membros." />

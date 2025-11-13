@@ -20,7 +20,7 @@ const data = [
     { name: "2025 (Estim.)", "Índice de Conflito Global (ICG)": 72, "Índice de Comércio Internacional (ICI)": 62 },
 ];
 
-export default function GlobalStatsChart() {
+export default function GraficoEstatisticasGlobais() {
     return (
         <Card sx={{ height: "100%", p: 2, boxShadow: 3 }}>
             <CardContent>

@@ -9,7 +9,7 @@ import {
     Legend, 
     ResponsiveContainer 
 } from 'recharts';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, useTheme } from '@mui/material'; 
 
 const G7 = '#3498DB';
 const BRICS = '#E74C3C';
@@ -26,7 +26,15 @@ const rawDataBlocos = [
 ];
 
 const GraficoBlocos = () => {
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
+    const axisColor = theme.palette.text.primary;
+    const gridColor = theme.palette.divider;
+    const tooltipBg = isDarkMode ? theme.palette.background.paper : 'rgba(255, 255, 255, 0.9)';
+    const tooltipBorder = isDarkMode ? theme.palette.divider : '#ccc';
+    const patternLineColor = isDarkMode ? theme.palette.grey[400] : '#FFFFFF';
     
+
     const renderTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
             const dataItem = rawDataBlocos.find(d => d.pais === label);
@@ -34,14 +42,20 @@ const GraficoBlocos = () => {
             const ppc = dataItem.pibPPC;
 
             return (
-                <Paper sx={{ p: 1, bgcolor: 'rgba(255, 255, 255, 0.9)', border: '1px solid #ccc' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                <Paper 
+                    sx={{ 
+                        p: 1, 
+                        bgcolor: tooltipBg, 
+                        border: `1px solid ${tooltipBorder}` 
+                    }}
+                >
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
                         {label} ({dataItem.bloco})
                     </Typography>
                     <Typography variant="body2" sx={{ color: dataItem.bloco === 'G7' ? G7 : BRICS }}>
                         PIB Nominal: ${nominal.toFixed(2)} trilhões
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography variant="body2" color="text.secondary">
                         PIB PPC: ${ppc.toFixed(2)} trilhões (com padrão)
                     </Typography>
                 </Paper>
@@ -53,7 +67,13 @@ const GraficoBlocos = () => {
     const renderXAxisTick = ({ x, y, payload }) => {
         return (
             <g transform={`translate(${x},${y})`}>
-                <text x={0} y={0} dy={16} textAnchor="middle" fill="#000000">
+                <text 
+                    x={0} 
+                    y={0} 
+                    dy={16} 
+                    textAnchor="middle" 
+                    fill={axisColor}
+                >
                     {payload.value}
                 </text>
             </g>
@@ -70,7 +90,7 @@ const GraficoBlocos = () => {
 
     return (
         <Box sx={{ mt: 4, mb: 4 }}>
-            <Typography variant="h6" component="h3" sx={{ mb: 2 }}>
+            <Typography variant="h6" component="h3" sx={{ mb: 2, color: 'text.primary' }}>
                 Comparativo Econômico: 4 Maiores Países (PIB em Trilhões USD)
             </Typography>
             
@@ -80,26 +100,30 @@ const GraficoBlocos = () => {
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                     barCategoryGap="10%"
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
                     
                     <XAxis 
                         dataKey="pais" 
                         interval={0} 
                         tick={renderXAxisTick} 
+                        stroke={isDarkMode ? theme.palette.divider : theme.palette.grey[300]}
                     />
                     
                     <YAxis 
                         name="PIB (Trilhões USD)"
                         unit="T"
                         domain={[0, 40]}
+                        tick={{ fill: axisColor }}
+                        stroke={isDarkMode ? theme.palette.divider : theme.palette.grey[300]}
                     />
 
-                    <Tooltip content={renderTooltip} />
+                    <Tooltip content={renderTooltip} cursor={{ fill: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)' }}/>
                     
                     <Legend 
                         wrapperStyle={{ top: 0, left: 0, paddingBottom: '10px' }} 
                         verticalAlign="top" 
                         align="center"
+                        formatter={(value) => <span style={{ color: axisColor }}>{value}</span>}
                     />
 
                     <defs>
@@ -107,15 +131,15 @@ const GraficoBlocos = () => {
                             id="pattern-ppc-g7" 
                             x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse"
                         >
-                            <rect width="10" height="10" fill={G7} opacity="0.3" />
-                            <path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" stroke="#FFFFFF" strokeWidth="1" />
+                            <rect width="10" height="10" fill={G7} opacity="0.3" /> 
+                            <path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" stroke={patternLineColor} strokeWidth="1" />
                         </pattern>
                         <pattern 
                             id="pattern-ppc-brics" 
                             x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse"
                         >
                             <rect width="10" height="10" fill={BRICS} opacity="0.3" />
-                            <path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" stroke="#FFFFFF" strokeWidth="1" />
+                            <path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" stroke={patternLineColor} strokeWidth="1" />
                         </pattern>
                     </defs>
 

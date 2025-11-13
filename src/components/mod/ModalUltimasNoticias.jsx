@@ -1,22 +1,7 @@
 import React from "react";
-import { Box, Typography, Button, Divider } from "@mui/material";
+import { Box, Typography, Button, Divider, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
-import theme from "../../theme";
-
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: { xs: '95%', md: 800 },
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 2,
-    maxHeight: '90vh',
-    overflowY: 'auto',
-};
 
 const noticiasConteudoDetalhado = {
     "Cúpula do G7 foca em estabilização energética global": {
@@ -37,6 +22,23 @@ const noticiasConteudoDetalhado = {
 };
 
 export default function ModalUltimasNoticias({ news, onClose }) {
+    const theme = useTheme();
+
+    const modalStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: { xs: '95%', md: 800 },
+        bgcolor: theme.palette.background.paper,
+        boxShadow: theme.shadows[24],
+        p: 4,
+        borderRadius: 2,
+        maxHeight: '90vh',
+        overflowY: 'auto',
+        color: theme.palette.text.primary,
+    };
+
     if (!news) return null;
     const { title, source, date } = news;
 
@@ -50,15 +52,20 @@ export default function ModalUltimasNoticias({ news, onClose }) {
         <Box sx={modalStyle}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <NewspaperIcon color="primary" sx={{ fontSize: 30 }} />
-                <Button onClick={onClose} aria-label="Fechar" sx={{ minWidth: 0 }}>
+                <Button onClick={onClose} aria-label="Fechar" sx={{ minWidth: 0, color: theme.palette.text.primary }}>
                     <CloseIcon />
                 </Button>
             </Box>
-            
-            <Typography variant="h4" component="h2" gutterBottom sx={{ color: theme.palette.primary.dark, fontWeight: 700 }}>
+
+            <Typography
+                variant="h4"
+                component="h2"
+                gutterBottom
+                sx={{ color: theme.palette.primary.dark, fontWeight: 700 }}
+            >
                 {title}
             </Typography>
-            
+
             <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                 Fonte: <strong style={{ fontWeight: 700 }}>{source}</strong> | Publicado: {date}
             </Typography>
@@ -67,19 +74,28 @@ export default function ModalUltimasNoticias({ news, onClose }) {
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600, color: theme.palette.text.primary }}>
                 {content.intro}
             </Typography>
-            
+
             <Typography variant="body1" sx={{ mb: 2 }}>
                 {content.corpo}
             </Typography>
 
-            <Typography variant="body2" sx={{ fontStyle: 'italic', borderLeft: `3px solid ${theme.palette.secondary.main}`, pl: 1 }}>
+            <Typography
+                variant="body2"
+                sx={{ fontStyle: 'italic', borderLeft: `3px solid ${theme.palette.secondary.main}`, pl: 1 }}
+            >
                 <strong style={{ fontWeight: 700 }}>Impacto:</strong> {content.conclusao}
             </Typography>
 
             <Button
                 variant="contained"
                 fullWidth
-                sx={{ mt: 3, bgcolor: theme.palette.primary.main, '&:hover': { bgcolor: theme.palette.primary.dark } }}
+                sx={{
+                    mt: 3,
+                    bgcolor: theme.palette.primary.main,
+                    '&:hover': {
+                        bgcolor: theme.palette.primary.dark
+                    }
+                }}
                 onClick={onClose}
             >
                 Voltar à Página Inicial

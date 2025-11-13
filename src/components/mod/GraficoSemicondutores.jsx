@@ -9,7 +9,7 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 
 const colors = {
@@ -32,12 +32,19 @@ const rawDataSemicondutores = [
 
 const StyledTooltipPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1.5),
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: theme.palette.mode === 'dark' 
+        ? theme.palette.background.paper 
+        : 'rgba(255, 255, 255, 0.95)',
     border: `1px solid ${theme.palette.divider}`,
     boxShadow: theme.shadows[3],
 }));
 
 const GraficoSemicondutores = () => {
+    const theme = useTheme(); 
+    const isDarkMode = theme.palette.mode === 'dark';
+    const axisColor = isDarkMode ? theme.palette.text.secondary : theme.palette.text.primary;
+    const gridColor = isDarkMode ? theme.palette.divider : '#e0e0e0';
+    const cursorFill = isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
 
     const renderTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
@@ -82,12 +89,12 @@ const GraficoSemicondutores = () => {
                     margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                     barCategoryGap="15%"
                 >
-                    <CartesianGrid strokeDasharray="5 5" stroke="#e0e0e0" vertical={false} />
+                    <CartesianGrid strokeDasharray="5 5" stroke={gridColor} vertical={false} />
 
                     <XAxis
                         dataKey="etapa"
                         interval={0}
-                        tick={{ fill: '#424242', dy: 10, fontSize: 13, angle: -45, textAnchor: 'end' }}
+                        tick={{ fill: axisColor, dy: 10, fontSize: 13, angle: -45, textAnchor: 'end' }} 
                         height={90}
                     />
 
@@ -95,19 +102,19 @@ const GraficoSemicondutores = () => {
                         name="Market Share (%)"
                         unit="%"
                         domain={[0, 100]}
-                        tick={{ fill: '#424242', fontSize: 13 }}
+                        tick={{ fill: axisColor, fontSize: 13 }} 
                         axisLine={false}
                         tickLine={false}
                     />
 
-                    <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} content={renderTooltip} />
+                    <Tooltip cursor={{ fill: cursorFill }} content={renderTooltip} />
 
                     <Legend
                         verticalAlign="top"
                         align="center"
                         wrapperStyle={{ paddingTop: '15px', paddingBottom: '10px' }}
                         iconType="rect"
-                        formatter={(value, entry, index) => <span style={{ color: '#424242' }}>{value}</span>}
+                        formatter={(value, entry, index) => <span style={{ color: axisColor }}>{value}</span>} 
                     />
 
                     <defs>

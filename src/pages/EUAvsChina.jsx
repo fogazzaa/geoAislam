@@ -1,3 +1,4 @@
+// pages/EUAvsChina.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,49 +12,54 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
+    useTheme,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArticleIcon from "@mui/icons-material/Article";
 import ChipIcon from "@mui/icons-material/Storage";
 import GavelIcon from "@mui/icons-material/Gavel";
 import SecurityIcon from "@mui/icons-material/Security";
-import theme from "../theme";
 
 import GraficoSemicondutores from "../components/mod/GraficoSemicondutores";
 
-const ContentPage = ({ title, subtitle, children, navigateBack }) => (
-    <Box sx={{ py: 4, minHeight: "80vh" }}>
-        <Container maxWidth="md">
-            <Button
-                startIcon={<ArrowBackIcon />}
-                onClick={navigateBack}
-                variant="outlined"
-                color="primary"
-                sx={{ mb: 3 }}
-            >
-                Voltar para a Home
-            </Button>
+const ContentPage = ({ title, subtitle, children, navigateBack }) => {
+    const theme = useTheme();
 
-            <Card sx={{ p: 4, textAlign: "left" }}>
-                <Typography variant="h4" component="h1" gutterBottom color="primary">
-                    {title}
-                </Typography>
-                <Typography
-                    variant="h6"
-                    gutterBottom
-                    color="text.secondary"
+    return (
+        <Box sx={{ py: 4, minHeight: "80vh" }}>
+            <Container maxWidth="md">
+                <Button
+                    startIcon={<ArrowBackIcon />}
+                    onClick={navigateBack}
+                    variant="outlined"
+                    color="primary"
                     sx={{ mb: 3 }}
                 >
-                    {subtitle}
-                </Typography>
-                <Box sx={{ borderTop: "1px solid #eee", pt: 2 }}>{children}</Box>
-            </Card>
-        </Container>
-    </Box>
-);
+                    Voltar para a Home
+                </Button>
+
+                <Card sx={{ p: 4, textAlign: "left" }}>
+                    <Typography variant="h4" component="h1" gutterBottom color="primary">
+                        {title}
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        gutterBottom
+                        color="text.secondary"
+                        sx={{ mb: 3 }}
+                    >
+                        {subtitle}
+                    </Typography>
+                    <Box sx={{ borderTop: `1px solid ${theme.palette.divider}`, pt: 2 }}>{children}</Box>
+                </Card>
+            </Container>
+        </Box>
+    );
+};
 
 export default function EUAvsChina() {
     const navigate = useNavigate();
+    const theme = useTheme();
 
     return (
         <ContentPage
@@ -62,12 +68,16 @@ export default function EUAvsChina() {
             navigateBack={() => navigate("/")}
         >
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: `2px solid ${theme.palette.divider}`, pb: 1 }}
+                >
                     1. O Conceito de Desengajamento (Decoupling/De-risking)
                 </Typography>
 
                 <Typography component="p" sx={{ lineHeight: 1.8, mb: 2 }}>
-                    A rivalidade EUA-China deixou de ser uma competição dentro do mesmo sistema global. Washington busca agora o <strong>desengajamento total</strong> (<em>decoupling</em>) em setores críticos, como tecnologia militar e de dupla utilização. Em contraste, a União Europeia adota o termo mais pragmático, <strong>De-risking</strong> (redução de risco), visando diminuir a <strong>vulnerabilidade econômica</strong> sem interromper completamente o comércio.
+                    A rivalidade EUA-China deixou de ser uma competição dentro do mesmo sistema global. Washington busca agora o <strong>desengajamento total</strong> (*decoupling*) em setores críticos, como tecnologia militar e de dupla utilização. Em contraste, a União Europeia adota o termo mais pragmático, <strong>De-risking</strong> (redução de risco), visando diminuir a <strong>vulnerabilidade econômica</strong> sem interromper completamente o comércio.
                 </Typography>
 
                 <Typography component="p" sx={{ lineHeight: 1.8 }}>
@@ -76,11 +86,22 @@ export default function EUAvsChina() {
             </Box>
 
             <Box sx={{ mb: 4 }}>
-                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: `2px solid ${theme.palette.divider}`, pb: 1 }}
+                >
                     2. Eixos Centrais da Disputa Estratégica
                 </Typography>
 
-                <List sx={{ border: `1px solid ${theme.palette.divider}`, borderRadius: 1, p: 2, bgcolor: theme.palette.grey[50] }}>
+                <List
+                    sx={{
+                        border: `1px solid ${theme.palette.divider}`,
+                        borderRadius: 1,
+                        p: 2,
+                        bgcolor: theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.background.paper
+                    }}
+                >
                     <ListItem>
                         <ListItemIcon><ChipIcon color="secondary" /></ListItemIcon>
                         <ListItemText
@@ -106,7 +127,11 @@ export default function EUAvsChina() {
             </Box>
 
             <Box sx={{ mb: 4, mt: 5 }}>
-                <Typography variant="h5" component="h2" sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: '2px solid #eee', pb: 1 }}>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    sx={{ mb: 2, color: theme.palette.primary.dark, borderBottom: `2px solid ${theme.palette.divider}`, pb: 1 }}
+                >
                     3. Detalhe Estratégico: A Guerra dos Chips 💡
                 </Typography>
 
@@ -116,26 +141,75 @@ export default function EUAvsChina() {
 
                 <GraficoSemicondutores />
 
-                <Typography component="p" sx={{ lineHeight: 1.8, mt: 3, borderTop: '1px solid #eee', pt: 2 }}>
+                <Typography
+                    component="p"
+                    sx={{
+                        lineHeight: 1.8,
+                        mt: 3,
+                        borderTop: `1px solid ${theme.palette.divider}`,
+                        pt: 2
+                    }}
+                >
                     O gráfico ilustra a <strong>concentração geopolítica</strong>. A hegemonia em <strong>Design de Chips</strong> (EUA), <strong>Equipamentos de Produção</strong> (Holanda/ASML) e <strong>Fabricação Avançada</strong> (Taiwan/TSMC) cria 'gargalos' estratégicos. Qualquer disrupção nessas áreas, especialmente em Taiwan, representa um risco sistêmico para a economia global e para a segurança de ambos os blocos.
                 </Typography>
             </Box>
 
 
-            <Box sx={{ mt: 5, pt: 3, borderTop: '1px solid #ddd' }}>
-                <Typography variant="h5" component="h3" sx={{ mb: 2, color: theme.palette.primary.main, display: 'flex', alignItems: 'center' }}>
+            <Box sx={{
+                mt: 5,
+                pt: 3,
+                borderTop: `1px solid ${theme.palette.divider}`
+            }}>
+                <Typography
+                    variant="h5"
+                    component="h3"
+                    sx={{ mb: 2, color: theme.palette.primary.main, display: 'flex', alignItems: 'center' }}
+                >
                     <ArticleIcon sx={{ mr: 1 }} />
                     Bibliografia e Fontes Estratégicas
                 </Typography>
                 <List dense>
                     <ListItem disablePadding>
-                        <ListItemText primary="Allison, G. (2017). Destined for War: Can America and China Escape Thucydides's Trap? Houghton Mifflin Harcourt." secondary={<Link href="https://example.com/thucydides-trap" target="_blank">A armadilha de Tucídides.</Link>} />
+                        <ListItemText
+                            primary="Allison, G. (2017). Destined for War: Can America and China Escape Thucydides's Trap? Houghton Mifflin Harcourt."
+                            secondary={
+                                <Link
+                                    href="https://example.com/thucydides-trap"
+                                    target="_blank"
+                                    color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
+                                >
+                                    A armadilha de Tucídides.
+                                </Link>
+                            }
+                        />
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemText primary="Miller, C. (2022). Chip War: The Fight for the World's Most Critical Technology. Scribner." secondary={<Link href="https://example.com/chip-war" target="_blank">Recomendação de leitura sobre Semicondutores.</Link>} />
+                        <ListItemText
+                            primary="Miller, C. (2022). Chip War: The Fight for the World's Most Critical Technology. Scribner."
+                            secondary={
+                                <Link
+                                    href="https://example.com/chip-war"
+                                    target="_blank"
+                                    color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
+                                >
+                                    Recomendação de leitura sobre Semicondutores.
+                                </Link>
+                            }
+                        />
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemText primary="U.S. Department of Defense. China Military Power Report (Anual)." secondary={<Link href="https://www.dod.gov/china-report" target="_blank">Análise militar dos EUA.</Link>} />
+                        <ListItemText
+                            primary="U.S. Department of Defense. China Military Power Report (Anual)."
+                            secondary={
+                                <Link
+                                    href="https://www.dod.gov/china-report"
+                                    target="_blank"
+                                    color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
+                                >
+                                    Análise militar dos EUA.
+                                </Link>
+                            }
+                        />
                     </ListItem>
                 </List>
             </Box>
