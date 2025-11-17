@@ -201,7 +201,7 @@ export default function CrisesAmbientaisPage() {
                                 </Typography>
                                 <Typography variant="body2" sx={{ mt: 1 }}>
                                     <Link
-                                        href="https://www.mdba.gov.au/water-management"
+                                        href="https://www.gov.br/ana/pt-br/assuntos/gestao-das-aguas/planos-de-recursos-hidricos"
                                         target="_blank"
                                         rel="noopener"
                                         color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
@@ -245,7 +245,7 @@ export default function CrisesAmbientaisPage() {
                                 </Typography>
                                 <Typography variant="body2" sx={{ mt: 1 }}>
                                     <Link
-                                        href="https://www.eeas.europa.eu/eeas/o-nilo-e-outras-problem%C3%A1ticas-geopol%C3%ADtica-da-%C3%A1gua_pt"
+                                        href="https://www.eeas.europa.eu/eeas/o-nilo-e-outras-problem%C3%A1ticas-geopol%C3%ADtica-da-%C3%A1gua_pti"
                                         target="_blank"
                                         rel="noopener"
                                         color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
@@ -311,7 +311,7 @@ export default function CrisesAmbientaisPage() {
                             primary="IPBES (2023). Avaliação Global sobre Biodiversidade e Serviços Ecossistêmicos."
                             secondary={
                                 <Link
-                                    href="https://www.ipbes.net/global-assessment-report"
+                                    href="https://www.ipbes.net/global-assessment"
                                     target="_blank"
                                     rel="noopener"
                                     color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}

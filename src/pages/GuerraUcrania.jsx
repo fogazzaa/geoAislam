@@ -124,7 +124,7 @@ export default function GuerraUcraniaPage() {
                         </Typography>
                         <Typography component="p" sx={{ lineHeight: 1.8, mb: 2 }}>
                             <Link
-                                href="https://example.com/dados-demograficos-onu"
+                                href="https://brasil.un.org/pt-br/176960-guerra-deslocou-71-milh%C3%B5es-de-pessoas-dentro-da-ucr%C3%A2nia"
                                 target="_blank"
                                 rel="noopener"
                                 color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
@@ -155,7 +155,7 @@ export default function GuerraUcraniaPage() {
                             primary="Mearsheimer, John J. (2014). Why the Ukraine Crisis Is the West’s Fault. Foreign Affairs."
                             secondary={
                                 <Link
-                                    href="https://example.com/mearsheimer-ukraine"
+                                    href="https://www.e-ir.info/2014/03/06/john-mearsheimers-theory-of-offensive-realism-and-the-rise-of-china/#google_vignette"
                                     target="_blank"
                                     color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
                                 >
@@ -169,7 +169,7 @@ export default function GuerraUcraniaPage() {
                             primary="NATO Review (2023). A Reavaliação da Profundidade Estratégica da Europa Oriental."
                             secondary={
                                 <Link
-                                    href="https://www.nato.int/strategic-depth"
+                                    href="https://www.nato.int/en/what-we-do/deterrence-and-defence/deterrence-and-defence"
                                     target="_blank"
                                     color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
                                 >

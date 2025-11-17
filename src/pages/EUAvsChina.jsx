@@ -174,7 +174,7 @@ export default function EUAvsChina() {
                             primary="Allison, G. (2017). Destined for War: Can America and China Escape Thucydides's Trap? Houghton Mifflin Harcourt."
                             secondary={
                                 <Link
-                                    href="https://example.com/thucydides-trap"
+                                    href="https://www.hks.harvard.edu/publications/destined-war-can-america-and-china-escape-thucydidess-trap"
                                     target="_blank"
                                     color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
                                 >
@@ -188,7 +188,7 @@ export default function EUAvsChina() {
                             primary="Miller, C. (2022). Chip War: The Fight for the World's Most Critical Technology. Scribner."
                             secondary={
                                 <Link
-                                    href="https://example.com/chip-war"
+                                    href="https://www.publico.pt/2023/08/24/mundo/entrevista/chris-miller-semicondutores-sao-chave-mundo-moderno-2060805"
                                     target="_blank"
                                     color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
                                 >
@@ -202,7 +202,7 @@ export default function EUAvsChina() {
                             primary="U.S. Department of Defense. China Military Power Report (Anual)."
                             secondary={
                                 <Link
-                                    href="https://www.dod.gov/china-report"
+                                    href="https://media.defense.gov/2024/Dec/18/2003615520/-1/-1/0/MILITARY-AND-SECURITY-DEVELOPMENTS-INVOLVING-THE-PEOPLES-REPUBLIC-OF-CHINA-2024.PDF?trk=public_post_comment-text&utm_source=chatgpt.com"
                                     target="_blank"
                                     color={theme.palette.mode === 'light' ? theme.palette.info.dark : theme.palette.info.light}
                                 >
