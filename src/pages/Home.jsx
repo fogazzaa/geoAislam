@@ -21,8 +21,6 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import PublicIcon from "@mui/icons-material/Public";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 import TemaContexto from "../context/TemaContexto";
 
@@ -47,24 +45,6 @@ const globalStats = [
     value: "5.1%",
     detail: "Ainda acima da meta, em queda lenta",
     icon: <TrendingUpIcon sx={{ color: "#FFA500", fontSize: 30 }} />,
-  },
-];
-
-const latestNews = [
-  {
-    title: "Cúpula do G7 foca em estabilização energética global",
-    source: "Bloomberg",
-    date: "2025/11/12",
-  },
-  {
-    title: "Novas sanções impostas após escalada em disputa territorial",
-    source: "The Economist",
-    date: "2025/11/11",
-  },
-  {
-    title: "Relatório da ONU sobre o futuro dos recursos hídricos",
-    source: "BBC News",
-    date: "2025/11/09",
   },
 ];
 
@@ -142,6 +122,38 @@ export default function Home() {
     setOpenModal(false);
     setSelectedNews(null);
   };
+
+  const [newsAPI, setNewsAPI] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
+
+  React.useEffect(() => {
+    async function fetchNews() {
+      try {
+        const response = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/science_and_environment/rss.xml"
+        );
+
+        const data = await response.json();
+
+        // pegar só 3 notícias
+        const formatted = data.items.slice(0, 3).map((item) => ({
+          title: item.title,
+          source: "BBC News – Environment",
+          date: item.pubDate.substring(0, 10),
+          link: item.link,
+          description: item.description,
+        }));
+
+        setNewsAPI(formatted);
+      } catch (err) {
+        console.log("Erro ao buscar notícias:", err);
+      } finally {
+        setLoadingNews(false);
+      }
+    }
+
+    fetchNews();
+  }, []);
 
   return (
     <>
@@ -223,40 +235,47 @@ export default function Home() {
         </Box>
 
         <Grid container spacing={3} justifyContent="center">
-          {latestNews.map((news, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card
-                onClick={() => handleOpenModal(news)}
-                sx={{
-                  height: "100%",
-                  p: 2,
-                  borderLeft: `5px solid ${theme.palette.warning.main}`,
-                  transition: "0.3s",
-                  "&:hover": {
-                    boxShadow: theme.shadows[6],
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  component="h3"
-                  sx={{ mb: 1, fontWeight: 600 }}
+          {loadingNews ? (
+            <Typography>Carregando notícias...</Typography>
+          ) : (
+            newsAPI.map((news, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  onClick={() => handleOpenModal(news)}
+                  sx={{
+                    height: "100%",
+                    p: 2,
+                    borderLeft: `5px solid ${theme.palette.warning.main}`,
+                    transition: "0.3s",
+                    "&:hover": {
+                      boxShadow: theme.shadows[6],
+                      cursor: "pointer",
+                    },
+                  }}
                 >
-                  {news.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Fonte: <strong>{news.source}</strong>
-                </Typography>
-                <Typography variant="caption" color="text.disabled">
-                  {news.date}
-                </Typography>
-                <Button size="small" sx={{ mt: 1, float: "right" }}>
-                  Ver Detalhes
-                </Button>
-              </Card>
-            </Grid>
-          ))}
+                  <Typography
+                    variant="h6"
+                    component="h3"
+                    sx={{ mb: 1, fontWeight: 600 }}
+                  >
+                    {news.title}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary">
+                    Fonte: <strong>{news.source}</strong>
+                  </Typography>
+
+                  <Typography variant="caption" color="text.disabled">
+                    {news.date}
+                  </Typography>
+
+                  <Button size="small" sx={{ mt: 1, float: "right" }}>
+                    Ver Detalhes
+                  </Button>
+                </Card>
+              </Grid>
+            ))
+          )}
         </Grid>
       </Container>
 
