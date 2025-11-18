@@ -1,4 +1,3 @@
-// pages/Home.jsx
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,6 +12,7 @@ import {
   Modal,
   useTheme,
 } from "@mui/material";
+// Importações de Ícones
 import LandscapeIcon from "@mui/icons-material/Landscape";
 import BusinessIcon from "@mui/icons-material/Business";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
@@ -21,6 +21,9 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import PublicIcon from "@mui/icons-material/Public";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
+// Ícones de Navegação do Carrossel
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import TemaContexto from "../context/TemaContexto";
 
@@ -126,6 +129,33 @@ export default function Home() {
   const [newsAPI, setNewsAPI] = useState([]);
   const [loadingNews, setLoadingNews] = useState(true);
 
+  // === LÓGICA DO CARROSSEL ===
+  const scrollRef = React.useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true); 
+
+  const checkScrollLimits = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 1);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+    }
+  };
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 350; 
+      if (direction === "left") {
+        scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleScroll = () => {
+    checkScrollLimits();
+  };
   React.useEffect(() => {
     async function fetchNews() {
       try {
@@ -135,8 +165,8 @@ export default function Home() {
 
         const data = await response.json();
 
-        // pegar só 3 notícias
-        const formatted = data.items.slice(0, 3).map((item) => ({
+        // pegar só 4 notícias
+        const formatted = data.items.slice(0, 10).map((item) => ({
           title: item.title,
           source: "BBC News – Environment",
           date: item.pubDate.substring(0, 10),
@@ -154,6 +184,13 @@ export default function Home() {
 
     fetchNews();
   }, []);
+
+  React.useEffect(() => {
+    if (!loadingNews) {
+      checkScrollLimits();
+    }
+  }, [loadingNews, newsAPI.length]);
+
 
   return (
     <>
@@ -229,21 +266,65 @@ export default function Home() {
             Últimas Notícias Geopolíticas
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Clique para ler a análise completa em um{" "}
-            <strong>Modal de Destaque</strong>.
+            Role horizontalmente para ver todas as notícias ou use as setas.
           </Typography>
         </Box>
 
-        <Grid container spacing={3} justifyContent="center">
-          {loadingNews ? (
-            <Typography>Carregando notícias...</Typography>
-          ) : (
-            newsAPI.map((news, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+        {/* INÍCIO DO CARROSSEL DE NOTÍCIAS */}
+        <Box sx={{ position: "relative" }}>
+          <Button
+            onClick={() => scroll("left")}
+            variant="contained"
+            color="primary"
+            disabled={!canScrollLeft || loadingNews}
+            sx={{
+              position: "absolute",
+              left: -20, 
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 10,
+              minWidth: 0,
+              p: 1,
+              display: { xs: "none", md: "flex" }, 
+            }}
+          >
+            <ArrowBackIosNewIcon sx={{ fontSize: 16 }} />
+          </Button>
+
+          <Box
+            ref={scrollRef} 
+            onScroll={handleScroll}
+            sx={{
+              display: "flex",
+              overflowX: "auto", 
+              py: 2, 
+              scrollbarWidth: "none", 
+              "&::-webkit-scrollbar": { 
+                display: "none",
+              },
+              scrollSnapType: "x mandatory",
+            }}
+          >
+            {loadingNews ? (
+              <Typography sx={{ p: 2 }}>Carregando notícias...</Typography>
+            ) : (
+              newsAPI.map((news, index) => (
                 <Card
+                  key={index}
                   onClick={() => handleOpenModal(news)}
                   sx={{
-                    height: "100%",
+                    flexShrink: 0, 
+                    width: {
+                      xs: "90vw", 
+                      sm: "45%", 
+                      md: "31%", 
+                    },
+                    mr: 3, 
+                    scrollSnapAlign: "start", 
+                    height: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between", 
                     p: 2,
                     borderLeft: `5px solid ${theme.palette.warning.main}`,
                     transition: "0.3s",
@@ -253,30 +334,56 @@ export default function Home() {
                     },
                   }}
                 >
-                  <Typography
-                    variant="h6"
-                    component="h3"
-                    sx={{ mb: 1, fontWeight: 600 }}
-                  >
-                    {news.title}
-                  </Typography>
+                  <Box>
+                    <Typography
+                      variant="h6"
+                      component="h3"
+                      sx={{ mb: 1, fontWeight: 600, minHeight: "80px" }}
+                    >
+                      {news.title}
+                    </Typography>
 
-                  <Typography variant="body2" color="text.secondary">
-                    Fonte: <strong>{news.source}</strong>
-                  </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Fonte: <strong>{news.source}</strong>
+                    </Typography>
 
-                  <Typography variant="caption" color="text.disabled">
-                    {news.date}
-                  </Typography>
+                    <Typography variant="caption" color="text.disabled">
+                      {news.date}
+                    </Typography>
+                  </Box>
 
-                  <Button size="small" sx={{ mt: 1, float: "right" }}>
-                    Ver Detalhes
-                  </Button>
+                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button size="small" sx={{ mt: 1 }}>
+                      Ver Detalhes
+                    </Button>
+                  </Box>
                 </Card>
-              </Grid>
-            ))
-          )}
-        </Grid>
+              ))
+            )}
+          </Box>
+          {/* FIM DA SEÇÃO CARROSSEL DE NOTÍCIAS */}
+
+          {/* Botão de Seta Direita */}
+          <Button
+            onClick={() => scroll("right")}
+            variant="contained"
+            color="primary"
+            disabled={!canScrollRight || loadingNews}
+            sx={{
+              position: "absolute",
+              right: -20, 
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 10,
+              minWidth: 0,
+              p: 1,
+              display: { xs: "none", md: "flex" }, 
+            }}
+          >
+            <ArrowForwardIosIcon sx={{ fontSize: 16 }} />
+          </Button>
+        </Box>
+        {/* FIM DA ENVOLTÓRIA DO CARROSSEL */}
       </Container>
 
       <Divider sx={{ my: 5 }} />
